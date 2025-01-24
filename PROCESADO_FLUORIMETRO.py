@@ -49,7 +49,7 @@ if io_envio is True:
     ## EXPORTA LOS RESULTADOS
     
     
-    st.download_button(label="Download Excel File", data=datos_exporta.to_excel(index=False), file_name="data.xlsx", mime="application/vnd.ms-excel")
+    st.download_button(label="Download Excel File", data=datos_exporta.to_excel("data.xlsx"), mime="application/vnd.ms-excel")
     
     # # Botón para descargar la información como Excel
     # nombre_archivo =  'PROCESADO_FLUORIMETRO.xlsx'
