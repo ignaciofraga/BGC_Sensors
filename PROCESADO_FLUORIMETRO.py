@@ -52,6 +52,7 @@ if io_envio is True:
    
 
     csv = datos_exporta.to_csv().encode("utf-8")
+    csv=datos_exporta.to_excel("data.xlsx")
 
     st.download_button(
         label="Download data as CSV",
