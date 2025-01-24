@@ -8,6 +8,7 @@ import streamlit as st
 import datetime
 import pandas 
 from io import BytesIO
+import xlsxwriter
 
 
 
@@ -71,7 +72,7 @@ if io_envio is True:
     output = BytesIO()
     writer = pandas.ExcelWriter(output, engine='xlsxwriter')
     datos_excel = datos_exporta.to_excel(writer, index=False, sheet_name='DATOS')
-    writer.save()
+    writer.close()
     datos_excel = output.getvalue()
 
     st.download_button(
