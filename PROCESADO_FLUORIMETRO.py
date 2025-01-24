@@ -21,7 +21,11 @@ with st.form("Formulario", clear_on_submit=False):
 
     archivo_datos_fluorimetro  = st.file_uploader("Archivo con los datos del FLUORIMETRO", accept_multiple_files=False)
 
-    offset_fluorimetro = st.number_input('Incremento de tiempo fluorimetro (segundos):',value=0.5)
+    col1, col2 = st.columns(2,gap="small")
+    with col1:
+        offset_fluorimetro = st.number_input('Incremento de tiempo fluorimetro (segundos):',value=0.5)
+    with col2:
+        max_dt_tiempo = st.number_input('Máxima diferencia de tiempo (segundos):',value=10)        
         
     io_envio                    = st.form_submit_button("Procesar el archivo subido")
 
