@@ -1,5 +1,4 @@
 matplotlib==3.6.2
-openpyxl==3.0.10
 streamlit
 xlsxwriter==3.0.3
 seawater==3.3.4
