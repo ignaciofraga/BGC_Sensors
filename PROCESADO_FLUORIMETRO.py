@@ -16,7 +16,20 @@ st.title("Procesado de datos del perfilador y fluorimetro")
            
 archivo_datos_perfilador  = st.file_uploader("Arrastra o selecciona el archivo con los datos a importar", accept_multiple_files=False)
             
+with st.form("Formulario", clear_on_submit=False):
 
+    col1, col2, col3 = st.columns(3,gap="small")
+    with col1: 
+        archivo_datos_perfilador  = st.file_uploader("Archivo con los datos del PERFILADOR", accept_multiple_files=False)
+
+    with col2: 
+        archivo_datos_fluorimetro  = st.file_uploader("Archivo con los datos del FLUORIMETRO", accept_multiple_files=False)
+
+
+    with col3:         
+        offset_fluorimetro = st.number_input('Incremento de tiempo fluorimetro (segundos):',value=0.5)
+        
+    io_envio                    = st.form_submit_button("Procesar el archivo subido")
 
 
 
