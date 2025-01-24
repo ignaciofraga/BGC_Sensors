@@ -10,12 +10,16 @@ import pandas
 from io import BytesIO
 
 
+imagen_fondo    = 'DATOS/IMAGEN_FONDO.jpg'    
 
 
+    
+    
 
 st.title("Procesado de datos del perfilador y fluorimetro")
 
-           
+st.image(imagen_fondo)
+          
 # Formulario con los archivos de entrada y diferencia de tiempos perfilador-fluorimetro            
 with st.form("Formulario", clear_on_submit=False):
 
