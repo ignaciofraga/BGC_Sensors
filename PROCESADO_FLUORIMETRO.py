@@ -51,36 +51,36 @@ if io_envio is True:
     
    
 
-    csv = datos_exporta.to_csv().encode("utf-8")
-    csv=datos_exporta.to_excel("data.xlsx")
-
-    st.download_button(
-        label="Download data as CSV",
-        data=csv,
-        file_name="data.xlsx",
-        mime="application/vnd.ms-excel",
-        )
-    
-    
-    
-    #st.download_button(label="Download Excel File", data=datos_exporta.to_excel("data.xlsx"), file_name="data.xlsx", mime="application/vnd.ms-excel")
-    
-    # # Botón para descargar la información como Excel
-    # nombre_archivo =  'PROCESADO_FLUORIMETRO.xlsx'
-           
-    # output = BytesIO()
-    # writer = pandas.ExcelWriter(output, engine='xlsxwriter')
-    # datos_excel = datos_exporta.to_excel(writer, index=False, sheet_name='DATOS')
-    # writer.save()
-    # datos_excel = output.getvalue()
+    # csv = datos_exporta.to_csv().encode("utf-8")
+    # csv=datos_exporta.to_excel("data.xlsx")
 
     # st.download_button(
-    #     label="DESCARGA EXCEL CON LOS DATOS PROCESADOS",
-    #     data=datos_excel,
-    #     file_name=nombre_archivo,
-    #     help= 'Descarga un archivo .xlsx con los datos procesados',
-    #     mime="application/vnd.ms-excel"
-    # )              
+    #     label="Download data as CSV",
+    #     data=csv,
+    #     file_name="data.xlsx",
+    #     mime="application/vnd.ms-excel",
+    #     )
+    
+    
+    
+    # #st.download_button(label="Download Excel File", data=datos_exporta.to_excel("data.xlsx"), file_name="data.xlsx", mime="application/vnd.ms-excel")
+    
+    # Botón para descargar la información como Excel
+    nombre_archivo =  'PROCESADO_FLUORIMETRO.xlsx'
+           
+    output = BytesIO()
+    writer = pandas.ExcelWriter(output, engine='xlsxwriter')
+    datos_excel = datos_exporta.to_excel(writer, index=False, sheet_name='DATOS')
+    writer.save()
+    datos_excel = output.getvalue()
+
+    st.download_button(
+        label="DESCARGA EXCEL CON LOS DATOS PROCESADOS",
+        data=datos_excel,
+        file_name=nombre_archivo,
+        help= 'Descarga un archivo .xlsx con los datos procesados',
+        mime="application/vnd.ms-excel"
+    )              
    
 
 
