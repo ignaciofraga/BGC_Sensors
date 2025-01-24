@@ -7,6 +7,7 @@ Created on Wed Sep 21 08:05:55 2022
 import streamlit as st
 import datetime
 import pandas 
+from io import BytesIO
 
 
 
@@ -27,13 +28,45 @@ with st.form("Formulario", clear_on_submit=False):
     with col2:
         max_dt_tiempo = st.number_input('Máxima diferencia de tiempo (segundos):',value=10)        
         
-    io_envio                    = st.form_submit_button("Procesar el archivo subido")
+    io_envio                    = st.form_submit_button("Procesar los archivos subidos")
 
 if io_envio is True:
     
     # Lectura del archivo con los resultados del AA
-    datos_perilador       = pandas.read_excel(archivo_datos_perfilador)            
+    datos_perfilador       = pandas.read_excel(archivo_datos_perfilador)            
                   
+
+    ## PROCESADO DE LA INFORMACION
+    texto_estado = 'Procesando los archivos subidos '
+    with st.spinner(texto_estado):
+        
+        datos_exporta = datos_perfilador
+
+
+
+
+
+    ## EXPORTA LOS RESULTADOS
+    # Botón para descargar la información como Excel
+    nombre_archivo =  'PROCESADO_FLUORIMETRO.xlsx'
+           
+    output = BytesIO()
+    writer = pandas.ExcelWriter(output, engine='xlsxwriter')
+    datos_excel = datos_exporta.to_excel(writer, index=False, sheet_name='DATOS')
+    writer.save()
+    datos_excel = output.getvalue()
+
+    st.download_button(
+        label="DESCARGA EXCEL CON LOS DATOS PROCESADOS",
+        data=datos_excel,
+        file_name=nombre_archivo,
+        help= 'Descarga un archivo .xlsx con los datos procesados',
+        mime="application/vnd.ms-excel"
+    )              
+   
+
+
+
 
 # ###############################################################################
 # ################### PÁGINA PRINCIPAL BIOGEOQUIMICA ############################
