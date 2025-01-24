@@ -14,9 +14,8 @@ import pandas
 st.title("Procesado de datos del perfilador y fluorimetro")
 
            
-            
+# Formulario con los archivos de entrada y diferencia de tiempos perfilador-fluorimetro            
 with st.form("Formulario", clear_on_submit=False):
-
 
     archivo_datos_perfilador  = st.file_uploader("Archivo con los datos del PERFILADOR", accept_multiple_files=False)
 
@@ -26,7 +25,11 @@ with st.form("Formulario", clear_on_submit=False):
         
     io_envio                    = st.form_submit_button("Procesar el archivo subido")
 
-
+if io_envio is True:
+    
+    # Lectura del archivo con los resultados del AA
+    datos_perilador       = pandas.read_excel(archivo_datos_perfilador)            
+                  
 
 # ###############################################################################
 # ################### PÁGINA PRINCIPAL BIOGEOQUIMICA ############################
