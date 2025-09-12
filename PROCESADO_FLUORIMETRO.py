@@ -1,86 +1,49 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Sep 21 08:05:55 2022
+Created on Tue Sep 13 14:47:40 2022
 
 @author: ifraga
 """
-import streamlit as st
-import datetime
-import pandas 
-from io import BytesIO
+
+import FUNCIONES_PROCESADO_FLUORIMETRO
+import FUNCIONES_GRAFICOS_FLUORIMETRO
+
+                               
+
+directorio_general           = 'C:/Users/Nacho/Desktop/02-TRABAJO/IEO/02-PROYECTOS/02_PLANES_COMPLEMENTARIOS/SENSORES BIOGEOQUIMICOS/FLUORIMETRO_EMS/PROCESADO'
+
+#fecha_despliegue             = '20250116' # Formato YYYY/MM/DD
+fecha_despliegue             = '20250314' # Formato YYYY/MM/DD
+#fecha_despliegue             = '20250516' # Formato YYYY/MM/DD
+archivo_config_despliegue    = None                            
+archivo_config_recuperacion  = None
+
+tipo_dato_representa         = 'filtrado' #'filtrado'
 
 
-imagen_fondo    = 'DATOS/IMAGEN_FONDO.jpg'    
+directorio_trabajo = directorio_general + '/' + fecha_despliegue
 
+#datos_fluorimetro = FUNCIONES_PROCESADO_FLUORIMETRO.lectura_archivo_fluorimetro(directorio_trabajo,archivo_config_despliegue,archivo_config_recuperacion)
 
-    
-    
+#datos_filtrados_fluorimetro = FUNCIONES_PROCESADO_FLUORIMETRO.filtrado_datos_fluorimetro(directorio_trabajo)
 
-st.title("Procesado de datos del perfilador y fluorimetro")
+datos_perfilador = FUNCIONES_PROCESADO_FLUORIMETRO.lectura_datos_perfilador(directorio_trabajo)
 
-st.image(imagen_fondo)
-          
-# Formulario con los archivos de entrada y diferencia de tiempos perfilador-fluorimetro            
-with st.form("Formulario", clear_on_submit=False):
+# FUNCIONES_PROCESADO_FLUORIMETRO.combina_fluorimetro_perfilador(directorio_trabajo)
 
-    archivo_datos_perfilador  = st.file_uploader("Archivo con los datos del PERFILADOR", accept_multiple_files=False)
+listado_variables = ['CHLA','TRYP','CDOM']
+listado_unidades  = ['\u03bcg/L','ppb','ppb']
 
-    archivo_datos_fluorimetro  = st.file_uploader("Archivo con los datos del FLUORIMETRO", accept_multiple_files=False)
+#listado_variables = ['TRYP']
+#listado_unidades  = ['ppb']
 
-    col1, col2 = st.columns(2,gap="small")
-    with col1:
-        offset_fluorimetro = st.number_input('Incremento de tiempo fluorimetro (segundos):',value=0.5)
-    with col2:
-        max_dt_tiempo = st.number_input('Máxima diferencia de tiempo (segundos):',value=10)        
-        
-    io_envio                    = st.form_submit_button("Procesar los archivos subidos")
+#FUNCIONES_GRAFICOS_FLUORIMETRO.graficos_perfiles(directorio_trabajo,listado_variables,listado_unidades,tipo_dato_representa)
 
-if io_envio is True:
-    
-    # Lectura del archivo con los resultados del AA
-    datos_perfilador       = pandas.read_excel(archivo_datos_perfilador)            
-                  
+#FUNCIONES_GRAFICOS_FLUORIMETRO.gif_evolucion_perfiles(directorio_trabajo,listado_variables,tipo_dato_representa)
 
-    ## PROCESADO DE LA INFORMACION
-    texto_estado = 'Procesando los archivos subidos '
-    with st.spinner(texto_estado):
-        
-        datos_exporta = datos_perfilador
+#FUNCIONES_GRAFICOS_FLUORIMETRO.serie_temporal(directorio_trabajo,listado_variables,listado_unidades,tipo_dato_representa)
 
+#FUNCIONES_GRAFICOS_FLUORIMETRO.serie_temporal_perfiles(directorio_trabajo,listado_variables,tipo_dato_representa,fecha_despliegue)
 
+#FUNCIONES_GRAFICOS_FLUORIMETRO.serie_temporal_perfiles_lluvia(directorio_general,directorio_trabajo,listado_variables,tipo_dato_representa,fecha_despliegue)
 
-        # Mensaje de aviso 
-        texto_exito = 'Archivos procesados correctamente'
-        st.success(texto_exito)
-        
-        #else:
-            #texto_error = 'El participante introducido ya se encuentra en la base de datos '
-            #st.warning(texto_error, icon="⚠️") 
-
-
-
-        ## EXPORTA LOS RESULTADOS
-
-        # Botón para descargar la información como Excel
-        nombre_archivo =  'PROCESADO_FLUORIMETRO.xlsx'
-               
-        output = BytesIO()
-        writer = pandas.ExcelWriter(output, engine='xlsxwriter')
-        datos_excel = datos_exporta.to_excel(writer, index=False, sheet_name='DATOS')
-        writer.close()
-        datos_excel = output.getvalue()
-
-        st.download_button(
-            label="DESCARGA EXCEL CON LOS DATOS PROCESADOS",
-            data=datos_excel,
-            file_name=nombre_archivo,
-            help= 'Descarga un archivo .xlsx con los datos procesados',
-            mime="application/vnd.ms-excel"
-            )              
-   
-
-
-        
-     
-        
-     
